@@ -1,17 +1,50 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caída de Elementos</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gravedad con CSS y JavaScript</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: start;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+    .ball {
+      position: absolute;
+      top: 0;
+    }
+  </style>
 </head>
 <body>
-    <div id="falling-elements-container">
-        <div class="falling-element">🌟</div>
-        <div class="falling-element">🌟</div>
-        <div class="falling-element">🌟</div>
-    </div>
-    <script src="script.js"></script>
+  <div class="ball">Hola mundo!</div>
+  <script>
+    const ball = document.querySelector('.ball');
+    let velocity = 0;
+    let position = 0;
+    const gravity = 0.98;  // Gravedad
+    const bounceFactor = 0.7;  // Factor de rebote
+
+    function applyGravity() {
+      velocity += gravity;
+      position += velocity;
+
+      // Si la bola toca el fondo de la ventana, invierte la velocidad
+      if (position + ball.clientHeight >= window.innerHeight) {
+        position = window.innerHeight - ball.clientHeight;
+        velocity *= -bounceFactor;
+      }
+
+      ball.style.top = position + 'px';
+
+      requestAnimationFrame(applyGravity);
+    }
+
+    applyGravity();
+  </script>
 </body>
 </html>
